@@ -1,5 +1,5 @@
 # KoHack2022 
-> App Name: Maimo3Mikdash
+> App Name: MaimoMikdash
 
 > Team/School: Maimonides
 
