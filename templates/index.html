@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="  {{ url_for('static', filename='output.css') }}">
+  <title>MaimoMikdash</title>
+<script src="{{ url_for('static', filename='index.js') }}"></script> 
+  <link rel="icon" type="image" href="static/minecadialogo.png">
 </head>
 <body>
-    <a href="http://localhost:8080/login">Login</a>
-    <a href="http://localhost:8080/signup">Sign Up</a>
+
+  <div class="screen">
+    <div id="left">
+      <h1 id="title">MaimoMikdash</h1>
+      <ul>
+    <li><a href="#">Kohen Jobs</a></li>
+    <li><a href="#">File A Sanhedrin Lawsuit</a></li>
+    <li><a href="#">Reserve A Korban</a></li>
+    <li><a href="#">Help</a></li>
+  </ul>
+    </div>
+    <div id="right"></div>
+    <image src="mikdash.png">
+  </div>
+
 </body>
 </html>
