@@ -1,6 +1,6 @@
 # KoHack2022 
-App Name: Maimo3Mikdash
-Team/School: Maimonides
+>App Name: Maimo3Mikdash
+>Team/School: Maimonides
 
 ### Directory layout
 
