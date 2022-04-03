@@ -7,11 +7,15 @@
 
     .
     ├── Templates               # html files (frontend)
-            └── index.html
+    │       └── index.html
     ├── main.py                 # Main python file / flask app (backend)
     ├── static                  # static Images, Js and Css files.
-            ├── style.css
-            └── index.js
+    │       ├── style.css
+    │       └── index.js
     └── README.md 
 
-
+│   └──
+### Features
+> 1:
+> 2:
+> 3:
