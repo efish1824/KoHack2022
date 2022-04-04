@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaimoMikdash - Reservations</title>
+  <link rel="icon" type="image" href="static/mikdash.png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='reservations.css') }}">  <!---Import CSS styles-->
+</head>
+<body>
+<br>
+<div id="reservetitle">
+  <h1 id="th1">Reservations</h1>
+  <h3 id="th2">Welcome, {{ Name }}</h3>
+  <div class="logo">
+    <a href="http://localhost:8080/">
+      <img src="static/mikdash.png" alt="logo">
+    </a>
+  </div>
+  </div>
+<div class="navbar">
+  <ul>
+    <!--Navbar setup-->
+    <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+    <li><a href="http://localhost:8080/">Home</a></li>
+    <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+    <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+    <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+    <li><a href="http://localhost:8080/help">Help</a></li>
+    <li><a href="http://localhost:8080/login">Log In</a></li>
+    <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+  </ul>
+</div>
+<div class="reservations">
+  <!--Reservation Form-->
+  <form action="/reserve" method="POST">
+    <h4>Reserve a Korban</h4><br>
+    <label for="date">Date: </label>
+    <input type="date" id="date" name="date"
+       value="2023-01-01"
+       min="2023-01-01" max="2023-12-31"><br><br>
+    <label for="time">Choose a Time: </label>
+    <!--All possible times of day to give a Korban-->
+    <div class="time-select">
+    <select name="time" id="time">
+      <option value="9:00:00AM">9:00 AM</option>
+      <option value="9:30:00AM">9:30 AM</option>
+      <option value="10:00:00AM">10:00 AM</option>
+      <option value="10:30:00AM">10:30 AM</option>
+      <option value="11:00:00AM">11:00 AM</option>
+      <option value="11:30:00AM">11:30 AM</option>
+      <option value="12:00:00PM">12:00 PM</option>
+      <option value="12:30:00PM">12:30 PM</option>
+      <option value="1:00:00PM">1:00 PM</option>
+      <option value="1:30:00PM">1:30 PM</option>
+      <option value="2:00:00PM">2:00 PM</option>
+      <option value="2:30:00PM">2:30 PM</option>
+      <option value="3:00:00PM">3:00 PM</option>
+      <option value="3:30:00PM">3:30 PM</option>
+      <option value="4:00:00PM">4:00 PM</option>
+      <option value="4:30:00PM">4:30 PM</option>
+      <option value="5:00:00PM">5:00 PM</option>
+    </select>
+  </div>
+  <br><br>
+    <!--All possible Korbanot that you can bring-->
+    <label for="kban">Choose a Korban:</label>
+    <div class="select">
+    <select name="kban" id="kban">
+      <option value="Korban Chatat (kid/lamb)">Korban Chatat (kid/lamb)</option>
+      <option value="Korban Chatat (two birds)">Korban Chatat (two birds)</option>
+      <option value="Korban Olah (childbirth, Nazir, Metzora)">Korban Olah (childbirth, Nazir, Metzora)</option>
+      <option value="Korban Olah (convert)">Korban Olah (convert)</option>
+      <option value="Korban Olah (other, sheep/goat/cattle)">Korban Olah (other, sheep/goat/cattle)</option>
+      <option value="Korban Olah (bird)">Korban Olah (bird)</option>
+      <option value="Korban Asham (doubtful sin, ram)">Korban Asham (doubtful sin, ram)</option>
+      <option value="Korban Asham (Nazir Tamei, Metzora)">Korban Asham (Nazir Tamei, Metzora)</option>
+      <option value="Korban Shelamim (Nazir Tahor)">Korban Shelamim (Nazir Tahor)</option>
+      <option value="Korban Shelamim (voluntary, Korban Todah)">Korban Shelamim (voluntary, Korban Todah)</option>
+      <option value="Korban Mincha">Korban Mincha</option>
+    </select>
+  </div>
+    <br><br>
+    <input id="checkjs" type="checkbox" name="check">
+    <label for="check">By checking this box, I affirm that I am completely pure </label>
+    <br><br>
+    <input id="submit" type="submit" value="Submit Reservation">
+  </form><br>
+  <script>
+    //The following script makes it so that you can only submit the form when you've affirmed that you're pure
+    var checkbox =  document.getElementById("checkjs");
+    var submit = document.getElementById("submit");
+    submit.disabled = true;
+    checkbox.addEventListener('change', (click) => {
+      if(checkbox.checked) {
+        submit.disabled = false;
+      } else {
+        submit.disabled = true;
+      }
+    })
+  </script>
+  <!--Reservation Status (Taken, Not Taken)-->
+  <h4> Reservation Status: {{ status|safe }} </h4><br>
+
+
+  <hr>
+  <!--All of the user's current reservations-->
+  <h3>Your Reservations</h3>
+  <div style="height:250px;width:100%; overflow:auto;">
+{{CARDS|safe}}
+  </div>
+</div>
+
+</body>
+</html>

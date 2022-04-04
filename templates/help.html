@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help.css') }}">
+    <title>MaimoMikdash - Help</title>
+</head>
+<body>
+    <div class="navbar">
+    <ul>
+        <!--Navbar setup-->
+      <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+      <li><a href="http://localhost:8080/">Home</a></li>
+      <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+      <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+      <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+      <li><a href="http://localhost:8080/help">Help</a></li>
+      <li><a href="http://localhost:8080/login">Log In</a></li>
+      <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+    </ul>
+    </div>
+    <div class="logo">
+        <a href="http://localhost:8080/">
+          <img src="static/mikdash.png" alt="logo">
+        </a>
+      </div>
+    <div class="help">
+        <h1>
+            Help Page
+        </h1>
+    <p>F.A.Q.<br><br>• How do I reserve a Korban?<br><a href="http://localhost:8080/reserve">Click Here</a></p>
+    <p>• How do I file a Sanhedrin lawsuit?<br><a href="http://localhost:8080/sanhedrin">Click Here</a></p>
+    <p>• How do I check which job I have today as a Kohen?<br><a href="http://localhost:8080/kohen">Click Here</a></p>
+    <p>If your issue persists, please call us at our toll-free hotline at <br><a href="tel:7817086665">+1 (781) 708-6665</a></p>
+    </div>
+</body>
+</html>

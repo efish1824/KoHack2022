@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='kohen.css') }}">  <!---Import CSS styles-->
+    <title>MaimoMikdash - KohenPortal</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <!--Navbar setup-->
+          <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+          <li><a href="http://localhost:8080/">Home</a></li>
+          <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+          <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+          <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+          <li><a href="http://localhost:8080/help">Help</a></li>
+          <li><a href="http://localhost:8080/login">Log In</a></li>
+          <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="logo">
+        <a href="http://localhost:8080/">
+          <img src="static/mikdash.png" alt="logo">
+        </a>
+      </div>
+    {{status|safe}}
+    <h1>Kohen Job Table</h1>
+    <!--Takes argument of code from Python and transmits it here-->
+    {{jobs|safe}}
+    <p>Source: Mishnayot Yoma 2:2-4</p>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/5685ef7674.js" crossorigin="anonymous"></script> <!---Import Awesome Icons 6-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='k_login.css') }}"> <!---Import CSS styles--->
+
+    <title>MaimoMikdash - KohenLogin</title>
+</head>
+<body>
+    <ul>
+        <!--Navbar setup-->
+        <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+        <li><a href="http://localhost:8080/">Home</a></li>
+        <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+        <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+        <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+        <li><a href="http://localhost:8080/help">Help</a></li>
+        <li><a href="http://localhost:8080/login">Log In</a></li>
+        <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+    </ul>
+    <div class="logo">
+        <a href="http://localhost:8080/">
+          <img src="static/mikdash.png" alt="logo">
+        </a>
+      </div>
+    <h1>Kohen Login : For Kohanim Only</h1><br>
+    <!--Status variable allows user to see the problems with their login-->
+    <p>{{status}}</p>
+    <!--Form so that the Kohen can log in-->
+    <form class="k_login" action="http://localhost:8080/kohen" method="POST">
+    <i class="fa-solid fa-user"></i> <!---Icon-->
+    <input placeholder="Username..." name="name" type="text">
+    <i class="fa-solid fa-key"></i> <!---Icon-->
+    <input placeholder="Password..." name="pwd" type="password">
+    <input class="submit" type="submit" value="Sign In">
+    </form>
+
+</body>
+</html>

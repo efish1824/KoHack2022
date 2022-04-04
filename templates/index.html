@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}"> <!--Import CSS styles --> 
+  <title>MaimoMikdash</title>
+</head>
+<body>
+  <section>
+  <h1 class="title">MaimoMikdash</h1>
+  <img class="img1" src="/static/mikdash.png" alt="beit hamikdas"/>
+  <div class="navbar">
+    <ul>
+      <!-- Navbar setup -->
+      <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+      <li><a href="http://localhost:8080/">Home</a></li>
+      <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+      <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+      <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+      <li><a href="http://localhost:8080/help">Help</a></li>
+      <li><a href="http://localhost:8080/login">Log In</a></li>
+      <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+      <h3 id="userlog">{{ Name }}</h3>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sanhedrin.css') }}">  <!---Import CSS styles-->
+    <title>MaimoMikdash - Sanhedrin</title>
+</head>
+<body>
+    
+    <div class="navbar">
+        <ul>
+            <!--Navbar setup-->
+          <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+          <li><a href="http://localhost:8080/">Home</a></li>
+          <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+          <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+          <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+          <li><a href="http://localhost:8080/help">Help</a></li>
+          <li><a href="http://localhost:8080/login">Log In</a></li>
+          <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+        </ul>
+    </div>
+    <div class="logo">
+        <a href="http://localhost:8080/">
+          <img src="static/mikdash.png" alt="logo">
+        </a>
+      </div>
+    
+    <div class="forms">
+        <!--The following form allows users tp submit a request to meet with the Sanhedrin-->
+    <form action="http://localhost:8080/sanhedrin" method="POST">
+    <h1>File A Sanhedrin Lawsuit</h1>
+    <label for="offender">I am challenging this person in Sanhedrin:</label><br>
+    <input type="text" name="offender" id="offender" placeholder="Offender"><br>
+    <label for="reason">Reason for going to Sanhedrin</label><br>
+    <select name="reason" id="reason">
+        <option value="Monetary">Monetary Dispute</option>
+        <option value="Report">Reporting Somebody for a Crime</option>
+        <option value="Marital">Marital Troubles</option>
+        <option value="Dispute">Dispute a Previous Ruling</option>
+    </select><br>
+    <label for="date">Date:</label><br>
+    <input type="date" id="date" name="date"
+       value="2023-01-01"
+       min="2023-01-01" max="2023-12-31"><br>
+    <label for="other">Other comments:</label><br>
+    <input type="text" name="other" id="other" placeholder="Comments...">
+    <br><br>
+    <input type="submit" value="Submit">
+    </form>
+    <br>
+    <div style="overflow:auto;">
+    <!--The status variable is passed from Python to the HTML in order to send alerts about whether there are any spots open-->
+    {{status|safe}}
+    </div>
+    <p>Once you arrive at the Sanhedrin, please wait in the waiting room until you are called</p>
+    <!--The current variable shows all of your current Sanhedrin meeting requests-->
+    {{current|safe}}
+</div>
+</body>
+</html>

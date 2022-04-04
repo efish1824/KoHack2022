@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">  <!---Import CSS styles-->
+    <script src="https://kit.fontawesome.com/5685ef7674.js" crossorigin="anonymous"></script>  <!---Import Awesome Icons 6-->
+
+    <title>MaimoMikdash - Login</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <!--Navbar setup-->
+          <li><a href="http://localhost:8080/clear">Sign Out</a></li>
+          <li><a href="http://localhost:8080/">Home</a></li>
+          <li><a href="http://localhost:8080/kohen">Kohen Portal</a></li>
+          <li><a href="http://localhost:8080/sanhedrin">File A Sanhedrin Lawsuit</a></li>
+          <li><a href="http://localhost:8080/reserve">Reserve A Korban</a></li>
+          <li><a href="http://localhost:8080/help">Help</a></li>
+          <li><a href="http://localhost:8080/login">Log In</a></li>
+          <li><a href="http://localhost:8080/signup">Sign Up</a></li>
+        </ul>
+    </div>
+    <div class="logo">
+        <a href="http://localhost:8080/">
+          <img src="static/mikdash.png" alt="logo">
+        </a>
+      </div>
+    <!--Login form for all users-->
+    <form action='http://localhost:8080/login' method='POST'>
+        <h1>Login</h1>
+        <p>{{status}}</p>
+        <i class="fa-solid fa-user"></i> <!---Icon-->
+        <input placeholder="Username..." name="name" type="text">
+        <i class="fa-solid fa-key"></i> <!---Icon-->
+        <input placeholder="Password..." name="pwd" type="password">
+        <input type="submit" value="Log In">
+    </form>
+    
+</body>
+</html>
