@@ -1,8 +1,8 @@
 # KoHack2022 
 > App Name: MaimoMikdash
-> 
+
 > Developers: Ephraim Fischer, Alon Baker, Roee Weglein
-> 
+
 > Team/School: Maimonides
 ## This program runs on SQL and uses specialized software and files made specially for this project. You will not be able to run this locally on your computer, so I will be running it on mine to demonstrate the project
 ### Directory layout
