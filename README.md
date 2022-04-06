@@ -41,3 +41,5 @@
     2: Kohen Automated Job Lottery: The implementation for this is stored in the app.py file, in templates/kohen_login.html, and in templates/kohen.html
 
     3: Sanhedrin Lawsuit Requesting System: The implementation for this is stored in the main.py file and in templates/sanhedrin.html
+    
+### Update: We won the hackathon!
