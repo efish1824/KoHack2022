@@ -376,7 +376,7 @@ def clear():
     session['kname'] = ''
     session['uname'] = ''
     session['doneIncense'] = ''
-    session['isKohenGadol']
+    session['isKohenGadol'] = ''
     return redirect('http://localhost:8080/')
     
 
