@@ -324,7 +324,7 @@ def lottery():
     for row in query:
         entries = list(json.loads(row['entries']))
         if not entries:
-            return render_template('kohen.html', jobs=kohenHTML(), status = "<script>alert('At least one Kohen has to be entered into each lottery\nTo enter all Kohanim, go to /simulateLottery')</script>")
+            return render_template('kohen.html', jobs=kohenHTML(), status = "<script>alert('At least one Kohen has to be entered into each lottery\nTo enter all Kohanim, go to https://maimomikdash.herokuapp.com/simulateLottery')</script>")
         #Chooses random index of winner
         winningIndex = random.randint(0, len(entries) - 1)
         cursor.execute(f"SELECT * FROM `kohanim` WHERE username = '{entries[winningIndex]}'")
