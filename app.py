@@ -40,6 +40,7 @@ def reserves():
         Time = FTime[:-2]
         Cycle = FTime[-2:]
         #check if the date/time status is taken or not
+        conn.ping(reconnect=True)
         cursor.execute(f"SELECT * FROM `reservations` WHERE date = '{Date}' AND time = '{Time}'")
         taken = cursor.fetchone()
 
@@ -49,6 +50,7 @@ def reserves():
             return render_template('reservations.html', status = f'''<span style="color:red;">This slot is taken</span>''', CARDS = reserveHTML(username), Name = Name)
 
         #if the date isn't taken, change status to taken and add fields to database.
+        conn.ping(reconnect=True)
         cursor.execute(f"INSERT INTO `reservations` (date, time, name, korban, username, cycle) VALUES ('{Date}', '{Time}','{Name}','{Korban}','{Username}', '{Cycle}')")
         
         #returning your succesful reservation
@@ -70,6 +72,7 @@ def reserveHTML(uname):
     @return HTML code with all of the users reserved Korbanot
     '''
     #Gets current user reservations data
+    conn.ping(reconnect=True)
     cursor.execute(f"SELECT * FROM `reservations` WHERE username = '{uname}' ORDER BY `date` asc, `cycle` asc, `time` asc")
     rows = cursor.fetchall()
     code = f''''''
@@ -99,6 +102,7 @@ def login():
         if not uname or not pwd:
             return render_template('login.html', status='Please fill out all fields')
         #Checks whether the username and password were both correct
+        conn.ping(reconnect=True)
         cursor.execute(f"SELECT * FROM `users` WHERE upper(username) = upper('{uname}')")
         if cursor.rowcount == 0:
             return render_template('login.html', status='Username or password is incorrect')
@@ -135,6 +139,7 @@ def signup():
         if len(uname) < 6 or len(uname) > 32:
             return render_template('signup.html', status = 'Usernames must be between 6 and 32 characters')
         #Checks whether the username is in use
+        conn.ping(reconnect=True)
         cursor.execute(f"SELECT * FROM `users` WHERE upper(username) = upper('{uname}')")
         row = cursor.fetchone()
         if row:
@@ -145,6 +150,7 @@ def signup():
         #Hashes password
         newpwd = bcrypt.generate_password_hash(pwd).decode('utf-8')
         #Signs you up and signs you in with your new account
+        conn.ping(reconnect=True)
         cursor.execute(f"INSERT INTO `users` (username, name, pwd) VALUES ('{uname}', '{name}', '{newpwd}');")
         session['name'] = name
         session['uname'] = uname
@@ -169,10 +175,12 @@ def sanhedrin():
         date = request.form.get('date')
         other = request.form.get('other')
         #Checks whether there is an available court date for you
+        conn.ping(reconnect=True)
         cursor.execute(f"SELECT * FROM `sanhedrin` WHERE date = '{date}'")
         if cursor.rowcount >= 5:
             return render_template('sanhedrin.html', current = curAppts(), status = '<script>alert("There are no open slots today")</script>')
         #Stores the court date in the database `sanhedrin`
+        conn.ping(reconnect=True)
         cursor.execute(f"INSERT INTO `sanhedrin` (date, name, username, offender, reason, other) VALUES ('{date}', '{session['name']}', '{session['uname']}', '{offender}', '{reason}', '{other}')")
         return redirect('https://maimomikdash.herokuapp.com/sanhedrin')
     #Checks whether you are logged in
@@ -187,6 +195,7 @@ def curAppts():
     Creates HTML code that shows the end user their current court dates
     @return HTML code that shows the user their currently filed court dates
     '''
+    conn.ping(reconnect=True)
     cursor.execute(f"SELECT * FROM `sanhedrin` WHERE username = '{session['uname']}' ORDER BY `date` asc")
     appts = cursor.fetchall()
 
@@ -230,6 +239,7 @@ def kohen():
         if not uname or not pwd:
             return render_template('kohen_login.html', status='Please fill out all fields')
         #Checks whether you are a Kohen
+        conn.ping(reconnect=True)
         cursor.execute(f"SELECT * FROM `kohanim` WHERE upper(username) = upper('{uname}')")
         if cursor.rowcount == 0:
             return render_template('kohen_login.html', status='You are not a Kohen. Please use the standard login')
@@ -266,6 +276,7 @@ def kohenHTML():
     <th>Sign Up for Tomorrow's Lottery</th>
     </tr>
     '''
+    conn.ping(reconnect=True)
     cursor.execute('SELECT * FROM `lottery`')
     rows = cursor.fetchall()
 
@@ -298,6 +309,7 @@ def enterLottery():
     This function signs a Kohen up for the specific lottery that they want
     '''
     job = request.form.get('job')
+    conn.ping(reconnect=True)
     cursor.execute(f"SELECT * FROM `lottery` WHERE job = '{job}'")
     query = cursor.fetchone()
     #Retrieves existing JSON of lottery entries from the SQL table `lottery`
@@ -307,6 +319,7 @@ def enterLottery():
         return render_template('kohen.html', jobs = kohenHTML(), status = '<script>alert("You have already entered the lottery for this job")</script>')
     #Adds you to the lottery so your name can get picked later
     names.append(session['uname'])
+    conn.ping(reconnect=True)
     cursor.execute(f"UPDATE lottery SET entries = '{json.dumps(names)}' WHERE job = '{job}'")
     return render_template('kohen.html', jobs=kohenHTML(), status = "<script>alert('You have been entered!')</script>")
 
@@ -317,6 +330,7 @@ def lottery():
     This function helps implement feature 2
     This function allows the Kohen Gadol to execute the lottery
     '''
+    conn.ping(reconnect=True)
     cursor.execute('SELECT * FROM `lottery`')
     query = cursor.fetchall()
     winners = []
@@ -341,6 +355,7 @@ def lottery():
         #Makes sure nobody does the Ketoret more than once (Yoma 2:4)
         if row['job'] == 'Offer the Ketoret':
             cursor.execute(f"UPDATE kohanim SET doneIncense = true WHERE username = '{entries[winningIndex]}'")
+        conn.ping(reconnect=True)
         cursor.execute("UPDATE `lottery` SET `entries`='[]'")
     return redirect("https://maimomikdash.herokuapp.com/kohen")
 
@@ -352,6 +367,7 @@ def simulate():
     For demonstration only
     '''
     #Gets all Kohanim in database
+    conn.ping(reconnect=True)
     cursor.execute('SELECT * FROM `kohanim`')
     kohanim = cursor.fetchall()
     cursor.execute('SELECT * FROM `lottery`')
@@ -364,6 +380,7 @@ def simulate():
                 continue
             if person['username'] not in names:
                 names.append(person['username'])
+        conn.ping(reconnect=True)
         cursor.execute(f"UPDATE lottery SET entries = '{json.dumps(names)}' WHERE job = '{row['job']}'")
     return redirect('https://maimomikdash.herokuapp.com/kohen')
 
