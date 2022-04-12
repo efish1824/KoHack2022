@@ -11,7 +11,7 @@ Session(app)
 bcrypt = Bcrypt()
 
 #Initializes mysql
-conn = pymysql.connect(host="localhost", user="kohack", passwd="KoHack2022", database="kohack2022", autocommit=True)
+conn = pymysql.connect(host="us-cdbr-east-05.cleardb.net", user="beabcdf8916140", passwd="b7d8437a", database="heroku_2957a4813044253", autocommit=True)
 cursor = conn.cursor(pymysql.cursors.DictCursor)
 
 #Landing Page
@@ -110,12 +110,12 @@ def login():
             #Creates a new session variable with your name to keep you logged in
             session['name'] = row['name']
             session['uname'] = row['username']
-            return redirect('http://localhost:8080/')
+            return redirect('https://maimomikdash.herokuapp.com/')
     #Checks whether you've been logged in or not
     if not session.get('name'):
         return render_template('login.html', status='')
     else:
-        return redirect('http://localhost:8080/')
+        return redirect('https://maimomikdash.herokuapp.com/')
 
 #Signup page
 @app.route('/signup', methods=['GET', 'POST'])
@@ -148,12 +148,12 @@ def signup():
         cursor.execute(f"INSERT INTO `users` (username, name, pwd) VALUES ('{uname}', '{name}', '{newpwd}');")
         session['name'] = name
         session['uname'] = uname
-        return redirect('http://localhost:8080/')
+        return redirect('https://maimomikdash.herokuapp.com/')
     #Checks whether you are signed in
     if not session.get('name'):
         return render_template('signup.html', status = '')
     else:
-        return redirect('http://localhost:8080/')
+        return redirect('https://maimomikdash.herokuapp.com/')
         
 #Sanhedrin Request Page
 @app.route('/sanhedrin', methods=['GET', 'POST'])
@@ -174,10 +174,10 @@ def sanhedrin():
             return render_template('sanhedrin.html', current = curAppts(), status = '<script>alert("There are no open slots today")</script>')
         #Stores the court date in the database `sanhedrin`
         cursor.execute(f"INSERT INTO `sanhedrin` (date, name, username, offender, reason, other) VALUES ('{date}', '{session['name']}', '{session['uname']}', '{offender}', '{reason}', '{other}')")
-        return redirect('http://localhost:8080/sanhedrin')
+        return redirect('https://maimomikdash.herokuapp.com/sanhedrin')
     #Checks whether you are logged in
     if not session.get('name'):
-        return redirect('http://localhost:8080/login')
+        return redirect('https://maimomikdash.herokuapp.com/login')
     else:
         return render_template('sanhedrin.html', current = curAppts(), status='')
         
@@ -243,7 +243,7 @@ def kohen():
             session['uname'] = row['username']
             session['doneIncense'] = bool(row['doneIncense'])
             session['isKohenGadol'] = bool(row['gadol'])
-            return redirect('http://localhost:8080/kohen')
+            return redirect('https://maimomikdash.herokuapp.com/kohen')
     #Checks whether you are logged in as a Kohen or not
     if not session.get('kname'):
         return render_template('kohen_login.html', status = '')
@@ -275,7 +275,7 @@ def kohenHTML():
         <tr>
         <td>{query['job']}</td>
         <td>{query['winner_today']}</td>
-        <td><form action="http://localhost:8080/enterLottery" method="POST">
+        <td><form action="https://maimomikdash.herokuapp.com/enterLottery" method="POST">
         <input type="hidden" name="job" value="{query['job']}">
         {'You have already offered the Ketoret' if (query['job'] == 'Offer the Ketoret' and session['doneIncense']) else '<input type="submit" value="Enter">'}
         </form>
@@ -284,7 +284,7 @@ def kohenHTML():
     code += '</table>'
     if session['isKohenGadol']:
         code += '''
-            <form action="http://localhost:8080/lottery" method="POST">
+            <form action="https://maimomikdash.herokuapp.com/lottery" method="POST">
             <input type="submit" value="Run Lottery">
             </form>
         '''
@@ -342,7 +342,7 @@ def lottery():
         if row['job'] == 'Offer the Ketoret':
             cursor.execute(f"UPDATE kohanim SET doneIncense = true WHERE username = '{entries[winningIndex]}'")
         cursor.execute("UPDATE `lottery` SET `entries`='[]'")
-    return redirect("http://localhost:8080/kohen")
+    return redirect("https://maimomikdash.herokuapp.com/kohen")
 
 #Kohen lottery simulation
 @app.route('/simulateLottery')
@@ -365,7 +365,7 @@ def simulate():
             if person['username'] not in names:
                 names.append(person['username'])
         cursor.execute(f"UPDATE lottery SET entries = '{json.dumps(names)}' WHERE job = '{row['job']}'")
-    return redirect('http://localhost:8080/kohen')
+    return redirect('https://maimomikdash.herokuapp.com/kohen')
 
 #Logout
 @app.route('/clear')
@@ -379,7 +379,7 @@ def clear():
     session['uname'] = ''
     session['doneIncense'] = ''
     session['isKohenGadol'] = ''
-    return redirect('http://localhost:8080/')
+    return redirect('https://maimomikdash.herokuapp.com/')
     
 
 #Help page
@@ -389,4 +389,4 @@ def help():
 
 #App run
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=8080)
+    app.run()
