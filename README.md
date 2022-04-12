@@ -5,6 +5,7 @@
 
 > Team/School: Maimonides
 ## This program runs on SQL and uses specialized software and files made specially for this project. You will not be able to run this locally on your computer, so I will be running it on mine to demonstrate the project
+## For anyone viewing this repo post-hackathon, the website is running at https://maimomikdash.herokuapp.com/
 ### Directory layout
 
     ├──Lib                                                     # This folder contains all of the packages that makes the site work
