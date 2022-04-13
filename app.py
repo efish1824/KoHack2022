@@ -59,7 +59,7 @@ def reserves():
     else:
         #if they are not logged in , redirect to sign up page.
         if not session.get('name'):
-            return render_template('signup.html', status = '')
+            return redirect('https://maimomikdash.herokuapp.com/login')
         #if they are logged in , display their current reservations if they have.
         username = session.get('uname')
         return render_template('reservations.html', Name = session.get('name'), status = f'''<span style="color:green">Not Taken</span>''', CARDS = reserveHTML(username))    
