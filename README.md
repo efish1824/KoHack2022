@@ -4,7 +4,7 @@
 > Developers: Ephraim Fischer, Alon Baker, Roee Weglein
 
 > Team/School: Maimonides
-## This program runs on SQL and uses specialized software and files made specially for this project. You will not be able to run this locally on your computer, so I will be running it on mine to demonstrate the project
+## This branch is reserved for the deployment of this website to https://maimomikdash.herokuapp.com/
 ### Directory layout
 
     ├──Lib                                                     # This folder contains all of the packages that makes the site work
