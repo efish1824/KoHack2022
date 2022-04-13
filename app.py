@@ -324,6 +324,81 @@ def lottery():
     for row in query:
         entries = list(json.loads(row['entries']))
         if not entries:
+            return render_template('kohen.html', jobs=kohenHTML(), status = r"<script>alert('At least one Kohen has to be entered into each lottery. To enter all Kohanim, go to https://maimomikdash.herokuapp.com/simulateLottery')</script>")
+    for row in query:
+        entries = list(json.loads(row['entries']))
+        #Chooses random index of winner
+        winningIndex = random.randint(0, len(entries) - 1)
+        cursor.execute(f"SELECT * FROM `kohanim` WHERE username = '{entries[winningIndex]}'")
+        winner = (cursor.fetchone())['name']
+        #Makes sure that the winner hasn't won already on that day
+        while winner in winners and len(entries) > 1:
+            entries.pop(winningIndex)
+            winningIndex = random.randint(0, len(entries) - 1)
+            cursor.execute(f"SELECT * FROM `kohanim` WHERE username = '{entries[winningIndex]}'")
+            winner = (cursor.fetchone())['name']
+        winners.append(winner)    
+        #Sets the person executing the job to the new winner
+        cursor.execute(f"UPDATE lottery SET winner_today = '{winner}' WHERE job = '{row['job']}'")
+        #Makes sure nobody does the Ketoret more than once (Yoma 2:4)
+        if row['job'] == 'Offer the Ketoret':
+            cursor.execute(f"UPDATE kohanim SET doneIncense = true WHERE username = '{entries[winningIndex]}'")
+        conn.ping(reconnect=True)
+        cursor.execute("UPDATE `lottery` SET `entries`='[]'")
+    return redirect("https://maimomikdash.herokuapp.com/kohen")
+
+#Kohen lottery simulation
+@app.route('/simulateLottery')
+def simulate():
+    '''
+    Adds all the Kohanim to the lottery
+    For demonstration only
+    '''
+    #Gets all Kohanim in database
+    conn.ping(reconnect=True)
+    cursor.execute('SELECT * FROM `kohanim`')
+    kohanim = cursor.fetchall()
+    cursor.execute('SELECT * FROM `lottery`')
+    lotteryjobs = cursor.fetchall()
+    #Adds all Kohanim to each lottery
+    for row in lotteryjobs:
+        names = list(json.loads(row['entries']))
+        for person in kohanim:
+            if row['job'] == 'Offer the Ketoret' and bool(person['doneIncense']):
+                continue
+            if person['username'] not in names:
+                names.append(person['username'])
+        conn.ping(reconnect=True)
+        cursor.execute(f"UPDATE lottery SET entries = '{json.dumps(names)}' WHERE job = '{row['job']}'")
+    return redirect('https://maimomikdash.herokuapp.com/kohen')
+
+#Logout
+@app.route('/clear')
+def clear():
+    '''
+    Clears your session variables
+    For demonstration only
+    '''
+    session['name'] = ''
+    session['kname'] = ''
+    session['uname'] = ''
+    session['doneIncense'] = ''
+    session['isKohenGadol'] = ''
+    return redirect('https://maimomikdash.herokuapp.com/')
+    
+
+#Help page
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+#App run
+if __name__ == '__main__':
+    app.run()
+
+    for row in query:
+        entries = list(json.loads(row['entries']))
+        if not entries:
             return render_template('kohen.html', jobs=kohenHTML(), status = "<script>alert('At least one Kohen has to be entered into each lottery\nTo enter all Kohanim, go to /simulateLottery')</script>")
         #Chooses random index of winner
         winningIndex = random.randint(0, len(entries) - 1)
