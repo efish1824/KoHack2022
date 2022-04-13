@@ -240,6 +240,7 @@ def kohen():
         else:
             #Logs you in as a Kohen
             session['kname'] = row['name']
+            session['name'] = row['name']
             session['uname'] = row['username']
             session['doneIncense'] = bool(row['doneIncense'])
             session['isKohenGadol'] = bool(row['gadol'])
