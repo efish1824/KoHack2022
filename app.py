@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 import pymysql, re, json, random
+from bleach import clean
 
 #Initializes flask and session variable system
 app = Flask(__name__)
@@ -207,10 +208,10 @@ def curAppts():
     for appt in appts:
         code += f'''
         <tr>
-        <td>{appt['offender']}</td>
-        <td>{appt['reason']}</td>
-        <td>{appt['date']}</td>
-        <td>{appt['other']}</td>
+        <td>{clean(appt['offender'])}</td>
+        <td>{clean(appt['reason'])}</td>
+        <td>{clean(appt['date'])}</td>
+        <td>{clean(appt['other'])}</td>
         </tr>
         '''
     code += '</table>'
