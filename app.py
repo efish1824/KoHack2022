@@ -41,7 +41,7 @@ def reserves():
         Time = FTime[:-2]
         Cycle = FTime[-2:]
         #check if the date/time status is taken or not
-        cursor.execute(f"SELECT * FROM `reservations` WHERE date = '{Date}' AND time = '{Time}'")
+        cursor.execute(f"SELECT * FROM `reservations` WHERE date = '{Date}' AND time = '{Time}'") #Possible SQL Injection allowed, In order to prevent this we need to use SQl Prepared Statements that seperate the Data from Code. Currentlty I do not know how to do prepared statements with pythons SQL we are using, But I could do it in PHP. 
         taken = cursor.fetchone()
 
         #If the time slot is taken, prompt user to take a different date
